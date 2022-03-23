@@ -30,6 +30,8 @@ class BaseFeatureExtractor(object):
     def get_output_shape(self):
         return self.feature_extractor.get_output_shape_at(-1)[1:3]
 
+    def get_output_shape2(self):
+        return self.feature_extractor.get_output_shape_at(-1)
     def extract(self, input_image):
         return self.feature_extractor(input_image)
 

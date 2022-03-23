@@ -23,6 +23,7 @@ class YOLO(object):
         self.input_size = input_size
         
         self.labels   = list(labels)
+        print('labels: ', self.labels)
         self.nb_class = len(self.labels)
         self.nb_box   = len(anchors)//2
         self.class_wt = np.ones(self.nb_class, dtype='float32')
@@ -55,7 +56,7 @@ class YOLO(object):
         else:
             raise Exception('Architecture not supported! Only support Full Yolo, Tiny Yolo, MobileNet, SqueezeNet, VGG16, ResNet50, and Inception3 at the moment!')
 
-        print(self.feature_extractor.get_output_shape())    
+        print('backend output shape:' , self.feature_extractor.get_output_shape2())    
         self.grid_h, self.grid_w = self.feature_extractor.get_output_shape()        
         features = self.feature_extractor.extract(input_image)            
 
@@ -81,6 +82,7 @@ class YOLO(object):
         layer.set_weights([new_kernel, new_bias])
 
         # print a summary of the whole model
+        self.feature_extractor.feature_extractor.summary()
         self.model.summary()
 
     def custom_loss(self, y_true, y_pred):
